@@ -1,0 +1,19 @@
+{
+  "name": "node-lisp",
+  "version": "0.0.1",
+  "description": "basic lisp interpretter in js",
+  "main": "src/repl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinludwig/node-lisp.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinludwig/node-lisp/issues"
+  },
+  "homepage": "https://github.com/kevinludwig/node-lisp#README.md"
+}
