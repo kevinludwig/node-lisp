@@ -78,7 +78,7 @@ const _eval = exports.eval = (xs, env = global_env) => {
         const [_, test, conseq, alt] = xs;
         return _eval(_eval(test, env) ? conseq : alt);
     } else if (xs[0] === Symbol.for('set!')) {
-        const [sym, expr] = xs;
+        const [_, sym, expr] = xs;
         env[sym] = _eval(expr, env);
     } else if (xs[0] === Symbol.for('fn')) {
         const [_, params, body] = xs;
