@@ -24,9 +24,10 @@ const parse = exports.parse = (text) => read_from_tokens(tokenize(text));
 
 const standard_env = () => ({
     [Symbol.for('+')]: (...xs) => xs.reduce((acc, val) => acc + val, 0),
-    [Symbol.for('-')]: (...xs) => xs.reduce((acc, val) => acc - val, 0),
+    [Symbol.for('-')]: (x, ...ys) => ys?.length ? ys.reduce((acc, val) => acc - val, x) : -x,
     [Symbol.for('*')]: (...xs) => xs.reduce((acc, val) => acc * val, 1),
-    [Symbol.for('/')]: (...xs) => xs.reduce((acc, val) => acc / val, 0),
+    [Symbol.for('/')]: (a, b) => a / b,
+    [Symbol.for('mod')]: (a, b) => a % b,
     [Symbol.for('>')]: (a, b) => a > b,
     [Symbol.for('<')]: (a, b) => a < b,
     [Symbol.for('>=')]: (a, b) => a >= b,
@@ -41,6 +42,8 @@ const standard_env = () => ({
     [Symbol.for('max')]: Math.max,
     [Symbol.for('min')]: Math.min,
     [Symbol.for('round')]: Math.round,
+    [Symbol.for('ceil')]: Math.ceil,
+    [Symbol.for('floor')]: Math.floor,
     [Symbol.for('apply')]: (fn, args) => fn(...args),
     [Symbol.for('do')]: (...xs) => xs.length && xs[xs.length-1], 
     [Symbol.for('first')]: x => x[0],

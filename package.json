@@ -4,7 +4,7 @@
   "description": "basic lisp interpretter in js",
   "main": "src/repl.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/kevinludwig/node-lisp/issues"
   },
-  "homepage": "https://github.com/kevinludwig/node-lisp#README.md"
+  "homepage": "https://github.com/kevinludwig/node-lisp#README.md",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
+    "nyc": "^15.1.0"
+  }
 }
