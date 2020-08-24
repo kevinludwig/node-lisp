@@ -1,4 +1,7 @@
 #!/usr/local/bin/node
+/* a sort of port from here: 
+ * https://norvig.com/lispy.html
+ */
 const readline = require('readline');
 const RL = readline.createInterface({
     input: process.stdin,
