@@ -54,4 +54,27 @@ describe('test lisp', () => {
     it('should support do, def, and set!', () => {
         lisp.eval(lisp.parse('(do (def x 1) (set! x 2) x)')).should.be.eql(2);
     });
+
+    it('should support "fn" special form', () => {
+        lisp.eval(lisp.parse('(do (def add2 (fn (x) (+ 2 x))) (add2 5))')).should.be.eql(7);
+    });
+
+    it('should support type checks', () => {
+        lisp.eval(lisp.parse('(list? (list 1 2 3))')).should.be.eql(true);
+        lisp.eval(lisp.parse('(list? (quote 1 2 3))')).should.be.eql(true);
+        lisp.eval(lisp.parse('(list? 1)')).should.be.eql(false);
+        lisp.eval(lisp.parse('(number? 1)')).should.be.eql(true);
+        lisp.eval(lisp.parse('(number? 1.023)')).should.be.eql(true);
+        lisp.eval(lisp.parse('(number? (quote 1))')).should.be.eql(false);
+        lisp.eval(lisp.parse('(fn? (fn (x) (+ 1 x)))')).should.be.eql(true);
+        lisp.eval(lisp.parse('(fn? map)')).should.be.eql(true);
+        lisp.eval(lisp.parse('(fn? (list 1 2 3))')).should.be.eql(false);
+        lisp.eval(lisp.parse('(do (def x 1) (symbol? x))')).should.be.eql(true);
+        lisp.eval(lisp.parse('(symbol? (list 1 2))')).should.be.eql(false);
+    });
+
+    it('should map and filter', () => {
+        lisp.eval(lisp.parse('(map (fn (x) (* 2)) (list 1 2 3 4))')).should.be.eql([2, 4, 6, 8]);
+        lisp.eval(lisp.parse('(filter (fn (x) (> x 4)) (list 2 4 6 8))')).should.be.eql([6, 8]);
+    });
 });

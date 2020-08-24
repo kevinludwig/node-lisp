@@ -51,13 +51,13 @@ const standard_env = () => ({
     [Symbol.for('cons')]: (x, y) => [x, ...y],
     [Symbol.for('pow')]: Math.pow,
     [Symbol.for('list')]: (...x) => [...x],
-    [Symbol.for('map')]: (f, ...xs) => xs.map(f),
+    [Symbol.for('map')]: (f, xs) => xs.map(f),
     [Symbol.for('filter')]: (f, xs) => xs.filter(f),
     [Symbol.for('not')]: (x) => !x,
     [Symbol.for('list?')]: x => Array.isArray(x),
-    [Symbol.for('number?')]: x => x instanceof Number,
-    [Symbol.for('symbol?')]: x => x instanceof Symbol,
-    [Symbol.for('fn?')]: x => x && {}.call(x) === '[object Function]'
+    [Symbol.for('number?')]: x => typeof x === 'number',
+    [Symbol.for('symbol?')]: x => {console.log(typeof x); return typeof x === 'symbol'},
+    [Symbol.for('fn?')]: x => typeof x === 'function'
 });
 
 const global_env = standard_env();
