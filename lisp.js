@@ -68,25 +68,25 @@ const global_env = standard_env();
 
 const zip = (...xs) => {
     const x = xs.reduce((a, b) => a.length < b.length ? a: b);
-    return x.map((_, i) => args.map((arr) => arr[i]));
+    return x.map((_, i) => xs.map((arr) => arr[i]));
 };
 
 const _eval = (x, env = global_env) => {
     if (x[0] === Symbol.for('def')) {
         const [_, sym, expr] = x;
-        env[sym] = eval(expr, env)
+        env[sym] = _eval(expr, env)
     } else if (x[0] === Symbol.for('quote')) {
         const [_, r] = x;
         return r;
     } else if (x[0] === Symbol.for('if')) {
         const [_, test, conseq, alt] = x;
-        return eval(eval(test, env) ? conseq : alt);
+        return _eval(_eval(test, env) ? conseq : alt);
     } else if (x[0] === Symbol.for('set!')) {
         const [sym, expr] = x;
         env[sym] = _eval(expr, env);
     } else if (x[0] === Symbol.for('fn')) {
-        const [params, body] = x;
-        return (...args) => _eval(body, {...env, ...zip(params, args)});
+        const [_, params, body] = x;
+        return (...args) => _eval(body, {...env, ...Object.fromEntries(zip(params, args))});
     } else if (typeof x === 'symbol') return env[x];
     else if (!Array.isArray(x)) return x;
     else {
