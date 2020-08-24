@@ -14,7 +14,9 @@ const RL = readline.createInterface({
 const to_string = (s) => {
     if (Array.isArray(s)) {
         return '(' + s.map(to_string).join(' ') + ')';
-    } else return s.toString();
+    } else if (s === null) return 'null';
+    else if (s === undefined) return undefined;
+    else return s.toString();
 };
 
 const repl = (prompt = '> ') => {
@@ -22,7 +24,7 @@ const repl = (prompt = '> ') => {
         if (line) {
             try {
                 const v = lisp.eval(lisp.parse(line));
-                if (v) console.log(to_string(v));
+                console.log(to_string(v));
             } catch (ex) {
                 console.log(ex);
             }

@@ -1,6 +1,9 @@
-const tokenize = (s) => s.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ').split(' ').filter(x => x);
+const tokenize = (s) => s.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ').split(' ').filter(x => x !== '');
 
-const atom = (token) => Number(token) || Symbol.for(token);
+const atom = (token) => {
+    const n = Number(token);
+    return isNaN(n) ? Symbol.for(token) : n;
+}
 
 const read_from_tokens = (tokens) => {
     if (tokens.length === 0) throw Error('Unexpected end of file');
