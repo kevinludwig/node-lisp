@@ -4,7 +4,8 @@
  * https://norvig.com/lispy.html
  */
 
-const lisp = require('./lisp');
+const {read} = require('./reader');
+const evaluate = require('./evaluate');
 const readline = require('readline');
 const RL = readline.createInterface({
     input: process.stdin,
@@ -23,7 +24,7 @@ const repl = (prompt = '> ') => {
     RL.question(prompt, (line) => {
         if (line) {
             try {
-                const v = lisp.eval(lisp.parse(line));
+                const v = evaluate(read(line));
                 console.log(to_string(v));
             } catch (ex) {
                 console.log(ex);
