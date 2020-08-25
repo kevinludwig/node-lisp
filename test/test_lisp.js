@@ -31,7 +31,7 @@ describe('test lisp', () => {
         lisp.eval(lisp.parse('(<= 3 3)')).should.be.eql(true);
     });
 
-    it('should apply', () => {
+    it('should support "apply" special form', () => {
         lisp.eval(lisp.parse('(= (+ 1 2 3 4 5) (apply + (quote 1 2 3 4 5)))')).should.be.eql(true);
     });
 

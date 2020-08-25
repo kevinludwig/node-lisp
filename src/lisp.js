@@ -1,4 +1,4 @@
-const tokenize = (s) => s.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ').split(' ').filter(x => x !== '');
+const tokenize = require('./tokenize');
 
 const atom = (token) => {
     const n = Number(token);
