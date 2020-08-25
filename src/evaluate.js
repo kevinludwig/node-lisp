@@ -22,9 +22,7 @@ const evaluate = (xs, env = globalEnvironment) => {
     else if (!Array.isArray(xs)) return xs;
     else {
         const [fn, ...args] = xs;
-        console.log("fn", fn);
         const _fn = evaluate(fn, env);
-        console.log('_fn is ', typeof _fn, _fn);
         return _fn(...args.map(arg => evaluate(arg, env)));
     }
 };

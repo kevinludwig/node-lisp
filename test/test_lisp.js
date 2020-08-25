@@ -60,6 +60,10 @@ describe('test lisp', () => {
         evaluate(read('(do (def add2 (fn (x) (+ 2 x))) (add2 5))')).should.be.eql(7);
     });
 
+    it('should support string types and boolean literals', () => {
+        evaluate(read('(if true "awesome" "nuts")')).should.be.eql('awesome');
+    });
+
     it('should support type checks', () => {
         evaluate(read('(list? (list 1 2 3))')).should.be.eql(true);
         evaluate(read('(list? (quote 1 2 3))')).should.be.eql(true);
@@ -67,6 +71,10 @@ describe('test lisp', () => {
         evaluate(read('(number? 1)')).should.be.eql(true);
         evaluate(read('(number? 1.023)')).should.be.eql(true);
         evaluate(read('(number? (quote 1))')).should.be.eql(false);
+        evaluate(read('(string? "test")')).should.be.eql(true);
+        evaluate(read('(string? 1)')).should.be.eql(false);
+        evaluate(read('(boolean? true)')).should.be.eql(true);
+        evaluate(read('(boolean? "true")')).should.be.eql(false);
         evaluate(read('(fn? (fn (x) (+ 1 x)))')).should.be.eql(true);
         evaluate(read('(fn? map)')).should.be.eql(true);
         evaluate(read('(fn? (list 1 2 3))')).should.be.eql(false);

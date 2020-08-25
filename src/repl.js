@@ -17,6 +17,7 @@ const to_string = (s) => {
         return '(' + s.map(to_string).join(' ') + ')';
     } else if (s === null) return 'null';
     else if (s === undefined) return undefined;
+    else if (typeof s === 'string') return `"${s}"`;
     else return s.toString();
 };
 

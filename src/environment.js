@@ -64,6 +64,8 @@ const build = () => {
     env.put('number?', x => typeof x === 'number');
     env.put('symbol?', x => typeof x === 'symbol');
     env.put('fn?', x => typeof x === 'function');
+    env.put('string?', x => typeof x === 'string');
+    env.put('boolean?', x => typeof x === 'boolean');
     return env;
 };
 
