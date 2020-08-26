@@ -1,28 +1,51 @@
+const {
+    NEWLINE,
+    OPEN_PAREN,
+    CLOSE_PAREN,
+    SEMICOLON,
+    DOUBLE_QUOTE,
+    WHITESPACE,
+    FORM_FEED,
+    TAB,
+    CARRIAGE_RETURN
+} = require('./constants');
+
 const peek = (s) => s.length ? s[0] : null; 
 const take = (s) => s.substring(1);
 
-const ws = (ch) => {
+const is_whitespace = (ch) => {
     switch (ch) {
-        case ' ':
-        case '\n':
-        case '\f':
-        case '\t':
-        case '\r':
-        return true;
+        case WHITESPACE:
+        case FORM_FEED:
+        case TAB:
+        case CARRIAGE_RETURN:
+            return true;
         default:
-        return false;
+            return false;
     }
 };
+
+const is_special_token = (ch) => {
+    switch (ch) {
+        case OPEN_PAREN:
+        case CLOSE_PAREN:
+        case NEWLINE:
+        case SEMICOLON:
+            return true;
+        default:
+            return false;
+    }
+}
 
 const read_token = (s) => {
     let ch = peek(s);
     
     /* eat ws */
-    while (ws(peek(s))) s = take(s);
+    while (is_whitespace(peek(s))) s = take(s);
 
     /* parens are tokens */
     ch = peek(s);
-    if (ch === '(' || ch === ')') {
+    if (is_special_token(ch)) {
         return {
             text: take(s),
             token: ch
@@ -30,13 +53,13 @@ const read_token = (s) => {
     }
 
     /* eat double quoted string */
-    if (ch === '"') {
+    if (ch === DOUBLE_QUOTE) {
         let res = '';
         do {
             ch = peek(s);
             res += ch;
             s = take(s);
-        } while (peek(s) !== '"');
+        } while (peek(s) !== DOUBLE_QUOTE);
         res += peek(s);
         s = take(s);
         return {
@@ -48,7 +71,7 @@ const read_token = (s) => {
     /* eat until whitespace or parens */
     let res = ch;
     s = take(s);
-    while (!ws(peek(s)) && peek(s) !== '(' && peek(s) !== ')') {
+    while (peek(s) && !is_whitespace(peek(s)) && !is_special_token(peek(s))) {
         res += peek(s);
         s = take(s);
     }

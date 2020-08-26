@@ -3,7 +3,8 @@ const {globalEnvironment, Environment} = require('./environment');
 const Fn = (params, body, env) => (...args) => evaluate(body, new Environment(params, args, env));
 
 const evaluate = (xs, env = globalEnvironment) => {
-    if (xs[0] === Symbol.for('def')) {
+    if (!xs?.length) return null;
+    else if (xs[0] === Symbol.for('def')) {
         const [_, sym, expr] = xs;
         env.put(sym, evaluate(expr, env));
     } else if (xs[0] === Symbol.for('quote')) {
