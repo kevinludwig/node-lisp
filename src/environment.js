@@ -3,6 +3,8 @@ const zip = (...xs) => {
     return x.map((_, i) => xs.map((arr) => arr[i]));
 };
 
+const isNil = (x) => x === null || x === undefined;
+
 class Environment {
     constructor(params, args, outer = null) {
         if (params && args) {
@@ -14,7 +16,7 @@ class Environment {
     }
 
     find(sym) {
-        if (this.map[sym]) return this.map[sym];
+        if (!isNil(this.map[sym])) return this.map[sym];
         else return this.outer?.find(sym);
     }
 
@@ -51,7 +53,6 @@ const build = () => {
     env.put('ceil', Math.ceil);
     env.put('floor', Math.floor);
     env.put('apply', (fn, args) => fn(...args));
-    env.put('do', (...xs) => xs.length && xs[xs.length-1]);
     env.put('first', x => x[0]);
     env.put('rest', ([first, ...rest]) => rest);
     env.put('cons', (x, y) => [x, ...y]);
